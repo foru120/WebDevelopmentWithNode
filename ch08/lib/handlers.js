@@ -1,10 +1,15 @@
 const fortune = require('./fortune')
 
-exports.home = (req, res) => res.render('home')
-
+exports.home = (req, res) => {
+    res.cookie('monster', 'nom nom')
+    res.cookie('signed_monster', 'nom nom', { signed: true })
+    res.render('home')
+}
 exports.about = (req, res) => res.render('about', {fortune: fortune.getFortune()})
 
 exports.sectionTest = (req, res) => res.render('section-test')
+
+exports.vacationPhoto = (req, res) => res.render('contest/vacation-photo')
 
 exports.notFound = (req, res) => res.render('404')
 
@@ -43,6 +48,12 @@ exports.vacationPhotoContestProcess = (req, res, fields, files) => {
     res.redirect(303, '/contest/vacation-photo-thank-you')
 }
 
+exports.api.vacationPhotoContest = (req, res, fields, files) => {
+    console.log('field data: ', fields)
+    console.log('files: ', files)
+    res.send({ result: 'success' })
+}
+
 /* eslint-disable no-unused-vars */
-exports.serverError = (err, req, res, next) => res.render('500')
+exports.serverError = (err, req, res, next) => res.render('500', {'message': err.message})
 /* eslint-enable no-unused-vars */

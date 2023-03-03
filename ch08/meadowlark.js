@@ -6,6 +6,10 @@ const app = express()
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const multiparty = require('multiparty')
+const cookieParser = require('cookie-parser')
+const credentials = require('./.credentials.development')
+const expressSession = require('express-session')
+const flashMiddleware = require('./lib/middleware/flash')
 
 app.engine('.hbs', expressHandlebars({
     extname: '.hbs',
@@ -22,6 +26,13 @@ app.set('view engine', '.hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(cookieParser(credentials.cookieParser))
+app.use(expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: credentials.cookieSecret
+}))
+app.use(flashMiddleware)
 
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
@@ -38,6 +49,7 @@ app.post('/contest/vacation-photo/:year/:month', (req, res) => {
         handlers.vacationPhotoContestProcess(req, res, fields, files)
     })
 })
+app.get('/contest/vacation-photo', handlers.vacationPhoto)
 
 const weatherMiddleware = require('./lib/middleware/weather')
 app.use(weatherMiddleware)
