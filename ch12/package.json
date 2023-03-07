@@ -1,0 +1,31 @@
+{
+  "name": "ch03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "meadowlark.js",
+  "scripts": {
+    "start": "NODE_ENV=production node logging.js",
+    "stress": "artillery quick --count 10 -n 20 http://localhost:3000/",
+    "test": "jest",
+    "lint": "eslint meadowlark.js lib"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.3",
+    "morgan": "^1.10.0",
+    "multiparty": "^4.2.3",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.21"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "jest": "^25.5.4",
+    "portfinder": "^1.0.32",
+    "puppeteer": "^1.20.0"
+  }
+}
